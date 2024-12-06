@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Model {
+private:
+    string data;
+
+public:
+    string getData() const {
+        return data;
+    }
+
+    void setData(const string& newData) {
+        data = newData;
+    }
+};
+
+class View {
+public:
+    void display(const string& data) const {
+        cout << "Data: " << data << endl;
+    }
+};
+
+class Controller {
+private:
+    Model& model;
+    View& view;
+
+public:
+    Controller(Model& m, View& v) : model(m), view(v) {}
+
+    void setData(const string& data) {
+        model.setData(data);
+    }
+
+    void updateView() const {
+        view.display(model.getData());
+    }
+};
+
+int main() {
+    Model model;
+    View view;
+    Controller controller(model, view);
+
+    controller.setData("Hello, MVC!");
+    controller.updateView();
+
+    controller.setData("Pattern MVC");
+    controller.updateView();
+
+    return 0;
+}
